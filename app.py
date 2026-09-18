@@ -38,7 +38,6 @@ top_clv = df_clean.sort_values(by='CLV', ascending=False).head(10)
 st.bar_chart(data=top_clv, x='CustomerID', y='CLV')
 
 # บันทึกผลลัพธ์กฎความสัมพันธ์ลงไฟล์ Excel
-rules_sorted.to_excel("association_rules_result.xlsx", index=False)
 print("บันทึกไฟล์เรียบร้อยแล้ว!")
 
 import matplotlib.pyplot as plt
