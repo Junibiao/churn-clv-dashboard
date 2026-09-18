@@ -225,7 +225,6 @@ display(rfm.sort_values(by='Churn_Risk_%', ascending=False).head(10))
 # ดึง IP Address ของเครื่อง Colab (ต้องใช้เป็น Password ตอนเปิดลิงก์)
 
 # รัน Streamlit ผ่าน LocalTunnel
-!npx localtunnel --port 8501
 
 # 1. สั่งให้ Streamlit ทำงานเบื้องหลัง
 !streamlit run app.py &> /dev/null &
