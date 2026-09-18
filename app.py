@@ -227,7 +227,6 @@ display(rfm.sort_values(by='Churn_Risk_%', ascending=False).head(10))
 # รัน Streamlit ผ่าน LocalTunnel
 
 # 1. สั่งให้ Streamlit ทำงานเบื้องหลัง
-!streamlit run app.py &> /dev/null &
 
 # 2. ดึง IP Address สำหรับใช้เป็น Password
 !echo "--- IP Address (คัดลอกตัวเลขนี้ไว้เป็น Password) ---"
