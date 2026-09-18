@@ -170,7 +170,7 @@ print("--- บันทึกไฟล์ customer_churn_clv_data.csv เรี�
 print("\n--- ตัวอย่าง 10 อันดับลูกค้าที่มีความเสี่ยง Churn สูงสุด ---")
 display(rfm.sort_values(by='Churn_Risk_%', ascending=False).head(10))
 
-!pip install streamlit pyngrok -q
+
 !npm install localtunnel
 
 # Commented out IPython magic to ensure Python compatibility.
