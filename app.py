@@ -7,7 +7,6 @@ Original file is located at
     https://colab.research.google.com/drive/1BPvkeCJNBDl_XNYxHEH14ceu90xQYeCi
 """
 
-from google.colab import files
 
 # กดรันแล้วจะมีปุ่ม Choose Files ขึ้นมาให้กดเลือกไฟล์ในเครื่อง
 uploaded = files.upload()
