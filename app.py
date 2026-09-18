@@ -38,58 +38,24 @@ top_clv = df_clean.sort_values(by='CLV', ascending=False).head(10)
 st.bar_chart(data=top_clv, x='CustomerID', y='CLV')
 
 # บันทึกผลลัพธ์กฎความสัมพันธ์ลงไฟล์ Excel
-print("บันทึกไฟล์เรียบร้อยแล้ว!")
+import streamlit as st
 
-import matplotlib.pyplot as plt
-import seaborn as sns
+st.title("E-Commerce Customer CLV & Churn Dashboard")
 
-# วาด Scatter plot แสดงความสัมพันธ์ระหว่าง Support, Confidence และ Lift
-plt.figure(figsize=(8, 5))
-sns.scatterplot(
-    x=rules['support'],
-    y=rules['confidence'],
-    size=rules['lift'],
-    hue=rules['lift'],
-    palette='viridis',
-    sizes=(20, 200)
-)
-plt.title('Market Basket Analysis - Support vs Confidence (Sized by Lift)')
-plt.xlabel('Support')
-plt.ylabel('Confidence')
-plt.grid(True)
-plt.show()
+# แสดงสถิติตัวเลขสรุป (KPIs)
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Customers", len(df_clean))
+col2.metric("Total CLV", f"${df_clean['CLV'].sum():,.2f}")
+col3.metric("Churn Rate", f"{(df_clean['Churn'].mean() * 100):.1f}%")
 
-import datetime as dt
-import numpy as np
-import pandas as pd
+# แสดงตัวอย่างข้อมูล
+st.subheader("Customer Data Overview")
+st.dataframe(df_clean.head(10))
 
-# 1. คำนวณตาราง RFM
-snapshot_date = df_clean['InvoiceDate'].max() + dt.timedelta(days=1)
-
-rfm = df_clean.groupby('CustomerID').agg({
-    'InvoiceDate': lambda x: (snapshot_date - x.max()).days, # Recency
-    'InvoiceNo': 'nunique',                                  # Frequency
-    'TotalSales': 'sum'                                      # Monetary
-}).reset_index()
-
-rfm.columns = ['CustomerID', 'Recency', 'Frequency', 'Monetary']
-
-# 2. กำหนดเป้าหมาย Churn ( Recency > 90 วัน คือ Churn = 1 )
-rfm['Churn'] = np.where(rfm['Recency'] > 90, 1, 0)
-rfm['CLV'] = rfm['Monetary']
-
-# 3. แสดงผลรวมจำนวนลูกค้าแยกตามสถานะ
-print("--- จำนวนลูกค้าแยกตาม Churn Status ---")
-print(rfm['Churn'].value_counts().rename({0: 'Active (ยังซื้ออยู่)', 1: 'Churned (เลิกซื้อ)'}))
-display(rfm.head())
-
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import classification_report, roc_auc_score
-
-# 1. จัดเตรียม Features (ปัจจัยในการทำนาย) และ Target (ผลลัพธ์ Churn)
-X = rfm[['Recency', 'Frequency', 'Monetary']]
-y = rfm['Churn']
+# แสดงกราฟสรุป
+st.subheader("Top 10 High CLV Customers")
+top_clv = df_clean.sort_values(by='CLV', ascending=False).head(10)
+st.bar_chart(data=top_clv, x='CustomerID', y='CLV')
 
 # 2. แบ่งข้อมูลสำหรับ Train 80% และ Test 20%
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
