@@ -171,8 +171,6 @@ print("\n--- ตัวอย่าง 10 อันดับลูกค้าท
 display(rfm.sort_values(by='Churn_Risk_%', ascending=False).head(10))
 
 
-!npm install localtunnel
-
 # Commented out IPython magic to ensure Python compatibility.
 # %%writefile app.py
 # import streamlit as st
