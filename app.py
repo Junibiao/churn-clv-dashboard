@@ -223,7 +223,6 @@ display(rfm.sort_values(by='Churn_Risk_%', ascending=False).head(10))
 #     st.warning("ไม่พบ CustomerID นี้ในระบบ")
 
 # ดึง IP Address ของเครื่อง Colab (ต้องใช้เป็น Password ตอนเปิดลิงก์)
-!curl ipv4.icanhazip.com
 
 # รัน Streamlit ผ่าน LocalTunnel
 !npx localtunnel --port 8501
