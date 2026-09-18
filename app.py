@@ -65,7 +65,6 @@ basket = df_clean.groupby('InvoiceNo')['Description'].apply(list)
 print("--- ตัวอย่างตะกร้าสินค้าของแต่ละคำสั่งซื้อ ---")
 print(basket.head())
 
-!pip install mlxtend
 
 import pandas as pd
 from mlxtend.frequent_patterns import apriori, association_rules
