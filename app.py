@@ -24,8 +24,7 @@ df_clean = df.copy()
 
 print("--- ข้อมูลหลังทำ Data Cleaning ---")
 print(f"จำนวนแถวคงเหลือ: {df_clean.shape[0]:,} แถว")
-display(df_clean.head())
-
+st.dataframe(df_clean.head())
 top_products = df_clean.groupby('Description')['Quantity'].sum().sort_values(ascending=False).head(10)
 print("--- 10 อันดับสินค้าที่ขายดีที่สุด (จำนวนชิ้น) ---")
 print(top_products)
