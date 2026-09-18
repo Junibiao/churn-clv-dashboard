@@ -16,8 +16,7 @@ print("กำลังอ่านไฟล์ข้อมูล...")
 df = pd.read_csv("customer_churn_clv_data.csv")
 # 2. ดูตัวอย่างข้อมูล 5 แถวแรก
 print("\n--- ตัวอย่างข้อมูล 5 แถวแรก ---")
-display(df.head())
-
+st.dataframe(df.head())
 # 3. ดูจำนวนแถว คอลัมน์ และประเภทข้อมูล
 print("\n--- ภาพรวมของข้อมูล ---")
 df.info()
