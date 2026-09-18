@@ -25,47 +25,17 @@ df_clean = df.copy()
 print("--- ข้อมูลหลังทำ Data Cleaning ---")
 print(f"จำนวนแถวคงเหลือ: {df_clean.shape[0]:,} แถว")
 st.dataframe(df_clean.head())
-top_products = df_clean.groupby('Description')['Quantity'].sum().sort_values(ascending=False).head(10)
-print("--- 10 อันดับสินค้าที่ขายดีที่สุด (จำนวนชิ้น) ---")
-print(top_products)
 
-# จัดกลุ่มสินค้าตาม InvoiceNo
-basket = df_clean.groupby('InvoiceNo')['Description'].apply(list)
-print("--- ตัวอย่างตะกร้าสินค้าของแต่ละคำสั่งซื้อ ---")
-print(basket.head())
+st.title("E-Commerce Customer CLV & Churn Dashboard")
 
+# แสดงข้อมูลตัวอย่าง
+st.subheader("Customer Data Overview")
+st.dataframe(df_clean.head(10))
 
-import pandas as pd
-from mlxtend.frequent_patterns import apriori, association_rules
-
-# 1. แปลงข้อมูลให้อยู่ในรูป One-Hot Encoding (1 ตะกร้าต่อ 1 แถว)
-basket = (df_clean.groupby(['InvoiceNo', 'Description'])['Quantity']
-          .sum().unstack().reset_index().fillna(0)
-          .set_index('InvoiceNo'))
-
-# 2. แปลงจำนวนสินค้าเป็น 1 (ซื้อ) และ 0 (ไม่ซื้อ)
-def encode_units(x):
-    if x <= 0:
-        return 0
-    if x >= 1:
-        return 1
-
-basket_sets = basket.map(encode_units)
-
-# 3. หาชุดสินค้าที่ถูกซื้อบ่อย (Frequent Itemsets)
-frequent_itemsets = apriori(basket_sets, min_support=0.02, use_colnames=True)
-
-# 4. สร้าง กฎความสัมพันธ์ (Association Rules)
-rules = association_rules(frequent_itemsets, metric="lift", min_threshold=1)
-
-# แสดงผล 10 กฎความสัมพันธ์ที่มีค่า Lift สูงที่สุด (มักถูกซื้อคู่กันจริง)
-rules_sorted = rules.sort_values('lift', ascending=False)[['antecedents', 'consequents', 'support', 'confidence', 'lift']]
-print("--- สินค้าที่มักถูกซื้อพร้อมกัน (Top Rules) ---")
-display(rules_sorted.head(10))
-
-# บันทึกผลลัพธ์กฎความสัมพันธ์เป็นไฟล์ Excel
-rules_sorted.to_excel("association_rules_result.xlsx", index=False)
-print("บันทึกไฟล์เรียบร้อยแล้ว: association_rules_result.xlsx")
+# แสดงกราฟสรุป CLV
+st.subheader("Top 10 High CLV Customers")
+top_clv = df_clean.sort_values(by='CLV', ascending=False).head(10)
+st.bar_chart(data=top_clv, x='CustomerID', y='CLV')
 
 # บันทึกผลลัพธ์กฎความสัมพันธ์ลงไฟล์ Excel
 rules_sorted.to_excel("association_rules_result.xlsx", index=False)
