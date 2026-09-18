@@ -20,33 +20,7 @@ print("\n--- ตัวอย่างข้อมูล 5 แถวแรก ---
 st.dataframe(df.head())
 # 3. ดูจำนวนแถว คอลัมน์ และประเภทข้อมูล
 print("\n--- ภาพรวมของข้อมูล ---")
-df.info()
-
-# 1. ลบแถวที่ไม่มี CustomerID (ลูกค้าไม่ลงทะเบียน)
-df_clean = df.dropna(subset=['CustomerID']).copy()
-
-# 2. ลบรายการที่ Quantity และ UnitPrice <= 0 (สินค้าคืน หรือข้อมูลผิดพลาด)
-df_clean = df_clean[(df_clean['Quantity'] > 0) & (df_clean['UnitPrice'] > 0)]
-
-# 3. แปลง CustomerID เป็นจำนวนเต็ม
-df_clean['CustomerID'] = df_clean['CustomerID'].astype(int)
-
-print(f"ขนาดข้อมูลหลัง Clean: {df_clean.shape[0]} แถว")
-display(df_clean.head())
-
-# 1. ลบแถวที่ไม่มี CustomerID
-df_clean = df.dropna(subset=['CustomerID']).copy()
-
-# 2. ลบรายการที่ Cancel (InvoiceNo ขึ้นต้นด้วย C) หรือ Quantity/UnitPrice <= 0
-df_clean['InvoiceNo'] = df_clean['InvoiceNo'].astype(str)
-df_clean = df_clean[~df_clean['InvoiceNo'].str.startswith('C')]
-df_clean = df_clean[(df_clean['Quantity'] > 0) & (df_clean['UnitPrice'] > 0)]
-
-# 3. สร้างคอลัมน์ยอดขายรวม (TotalSales)
-df_clean['TotalSales'] = df_clean['Quantity'] * df_clean['UnitPrice']
-
-# 4. แปลงประเภทข้อมูลให้ถูกต้อง
-df_clean['CustomerID'] = df_clean['CustomerID'].astype(int)
+df_clean = df.copy()
 
 print("--- ข้อมูลหลังทำ Data Cleaning ---")
 print(f"จำนวนแถวคงเหลือ: {df_clean.shape[0]:,} แถว")
