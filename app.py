@@ -13,8 +13,7 @@ import pandas as pd
 
 # 1. โหลดข้อมูลจากไฟล์ Excel
 print("กำลังอ่านไฟล์ข้อมูล...")
-df = pd.read_excel("Online Retail.xlsx")
-
+df = pd.read_csv("customer_churn_clv_data.csv")
 # 2. ดูตัวอย่างข้อมูล 5 แถวแรก
 print("\n--- ตัวอย่างข้อมูล 5 แถวแรก ---")
 display(df.head())
