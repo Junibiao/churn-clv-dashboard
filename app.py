@@ -229,16 +229,11 @@ display(rfm.sort_values(by='Churn_Risk_%', ascending=False).head(10))
 # 1. สั่งให้ Streamlit ทำงานเบื้องหลัง
 
 # 2. ดึง IP Address สำหรับใช้เป็น Password
-!echo "--- IP Address (คัดลอกตัวเลขนี้ไว้เป็น Password) ---"
-!curl -s https://ipv4.icanhazip.com
+
 
 # 3. เปิด Web App ผ่าน Localtunnel
-!npx localtunnel --port 8501
 
 # 1. รัน Streamlit ไว้ใน Background
-!streamlit run app.py &> /dev/null &
 
 # 2. ติดตั้งและเปิดเซิร์ฟเวอร์ด้วย cloudflared
-!wget -q https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64.deb
-!dpkg -i cloudflared-linux-amd64.deb &> /dev/null
-!cloudflared tunnel --url http://localhost:8501
+
