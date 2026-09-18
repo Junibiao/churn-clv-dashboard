@@ -9,8 +9,7 @@ Original file is located at
 
 
 # กดรันแล้วจะมีปุ่ม Choose Files ขึ้นมาให้กดเลือกไฟล์ในเครื่อง
-uploaded = files.upload()
-
+df = pd.read_csv('customer_churn_clv_data.csv')
 import pandas as pd
 
 # 1. โหลดข้อมูลจากไฟล์ Excel
